@@ -50,17 +50,17 @@ matches = {key.lower(): value for key, value in l10nmatches.items()}
 # check all the views usage
 print("Starting views usage analysis...")
 
-# for subdir, _, files in os.walk(path):
-#     for file in files: 
-#         if file.endswith(".swift") or file.endswith(".m") or file.endswith(".mm"):
-#             file_path = os.path.join(subdir, file)
-#             with open(file_path, 'r', encoding='utf-8') as f:
-#                 content = f.read()
-#                 for view in views:
-#                     structFinderPattern = re.compile(rf"(?<!struct\s){view}\b(?!\s*:\s*some\s*View)")
-#                     # match view name as whole word (not as part of another identifier)
-#                     for match in structFinderPattern.findall(content):
-#                         usageresults.setdefault(view, []).append(file_path)
+for subdir, _, files in os.walk(path):
+    for file in files: 
+        if file.endswith(".swift") or file.endswith(".m") or file.endswith(".mm"):
+            file_path = os.path.join(subdir, file)
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+                for view in views:
+                    structFinderPattern = re.compile(rf"(?<!struct\s){view}\b(?!\s*:\s*some\s*View)")
+                    # match view name as whole word (not as part of another identifier)
+                    for match in structFinderPattern.findall(content):
+                        usageresults.setdefault(view, []).append(file_path)
 
 views_file_usage = "views_usage.json"
 # with open(views_file_usage, "w", encoding="utf-8") as f:
